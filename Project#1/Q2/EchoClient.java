@@ -1,7 +1,3 @@
-/**
- * An echo client. The client enters data to the server, and the
- * server echoes the data back to the client.
- */
 import java.net.*;
 import java.io.*;
 import java.util.Scanner;
@@ -18,26 +14,34 @@ public class EchoClient
             //Writer send input to server
             PrintWriter clientOut = new PrintWriter(sock.getOutputStream(), true);
 
-            //Output when the client is connected to server
-            clientOut.println("Connected to Server");
-
+            //Make sure client connect to server
+            clientOut.println("Connected to server");
+            String fromServer=bin.readLine();
+            System.out.println(fromServer);
 
             //scanner to take user input
             Scanner scan=new Scanner(System.in);
             String userInput="";
 
             while(true){// send user input to the server
-                System.out.println("Hello Samurai.\nYou are sending a message to CyberBug 2077 server.\nEnter anything for message and -1 to close");//welcome message
-                userInput=scan.nextLine();
-                clientOut.println(userInput);// send message to server
+                System.out.println("*------------------------------------------------*");
 
-                if(userInput.equals("-1")){
+                System.out.println("Hello Samurai.\nYou are sending a message to CyberBug 2077 server.\nEnter anything for message and -1 to close");//welcome message
+
+                System.out.println("*------------------------------------------------*\n");
+
+                userInput=scan.nextLine();
+
+                if(userInput.equals("-1")){// close condition
                     sock.close();
                 }
-                /* read the quote from the socket */
-                String fromServer=bin.readLine();
 
-                if(fromServer!=null){
+                clientOut.println(userInput);// send message to server
+
+                /* read the quote from the socket */
+                fromServer=bin.readLine();
+
+                if(fromServer!=null){// Check to see if user enter anything
                     System.out.println(fromServer);
                 }
 
@@ -48,3 +52,4 @@ public class EchoClient
             System.err.println(ioe);
         }
     }
+}

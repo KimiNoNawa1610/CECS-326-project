@@ -1,8 +1,3 @@
-/**
- * An echo server listening on port 6007. This server reads from the client
- * and echoes back the result. 
- */
-
 import java.net.*;
 import java.io.*;
 
@@ -12,10 +7,11 @@ public class EchoServer
         try {
             ServerSocket sock = new ServerSocket(6017);
             /* now listen for connections */
-            while (true) {
+
                 Socket client = sock.accept();
                 PrintWriter pout = new PrintWriter(client.getOutputStream(), true);
 
+            while (true) {
                 //Initiate an instant of InputStream class
                 InputStreamReader input=new InputStreamReader(client.getInputStream());
 
@@ -27,14 +23,11 @@ public class EchoServer
                 //output data from client
                 System.out.println("Client: "+fromClient);
 
-                //check for breaking condition
-                if(fromClient.equals("-1")){
+                fromClient=fromClient.replaceAll("\\bserver\\b","holder")
+                        .replaceAll("\\bclient\\b","server")
+                        .replaceAll("\\bholder\\b","client");// change the server word to client word and vice versa
 
-                    /* close the socket and resume */
-                    /* listening for connections */
-                    client.close();
-                    break;
-                }
+
                 /* write the data from the client to the socket */
                 pout.println("Server: "+fromClient);
             }
