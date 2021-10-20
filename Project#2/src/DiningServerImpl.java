@@ -11,6 +11,7 @@ public class DiningServerImpl  implements DiningServer
     private Condition cd[]=new Condition[n];
     private ReentrantLock lock=new ReentrantLock();
 
+    //Take fork method
     @Override
     public void takeForks(int philosopherNumber) throws InterruptedException {
         lock.lock();
@@ -25,6 +26,7 @@ public class DiningServerImpl  implements DiningServer
 
     }
 
+    //return fork when finish eating
     @Override
     public void returnForks(int philosopherNumber) throws InterruptedException {
         lock.lock();
@@ -32,7 +34,7 @@ public class DiningServerImpl  implements DiningServer
         test((philosopherNumber+4)%5);
         test((philosopherNumber+1)%5);
         System.out.println("Philoshoper "+ philosopherNumber + " release chopsticks");
-        System.out.println("Philosopher "+philosopherNumber+" is THINKING");
+        System.out.println("Philosopher "+philosopherNumber+" is "+this.getPhilosopherState(philosopherNumber));
         lock.unlock();
     }
 
@@ -57,7 +59,7 @@ public class DiningServerImpl  implements DiningServer
                 (st[(philosopherNumber+1)%5]!=states.EATING)){
             st[philosopherNumber]= states.EATING;
             cd[philosopherNumber].signal();
-            System.out.println("Philosopher "+philosopherNumber+" is EATING");
+            System.out.println("Philosopher "+philosopherNumber+" is "+this.getPhilosopherState(philosopherNumber));
         }
     }
 
