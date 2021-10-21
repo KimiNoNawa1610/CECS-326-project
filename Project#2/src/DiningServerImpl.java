@@ -16,26 +16,29 @@ public class DiningServerImpl  implements DiningServer
     public void takeForks(int philosopherNumber) throws InterruptedException {
         lock.lock();
         st[philosopherNumber]=states.HUNGRY;
+        System.out.println("Philosopher "+philosopherNumber+" is "+this.getPhilosopherState(philosopherNumber));
         System.out.println("Philosopher "+philosopherNumber+" is taking chopsticks");
         test(philosopherNumber);
+        lock.unlock();
         if(st[philosopherNumber]!=states.EATING){
             cd[philosopherNumber].wait();
             //cd[philosopherNumber].await();
         }
-        lock.unlock();
+
 
     }
 
     //return fork when finish eating
     @Override
     public void returnForks(int philosopherNumber) throws InterruptedException {
-        lock.lock();
+        //lock.lock();
         st[philosopherNumber]=states.THINKING;
         test((philosopherNumber+4)%5);
         test((philosopherNumber+1)%5);
+        //lock.unlock();
         System.out.println("Philoshoper "+ philosopherNumber + " release chopsticks");
         System.out.println("Philosopher "+philosopherNumber+" is "+this.getPhilosopherState(philosopherNumber));
-        lock.unlock();
+
     }
 
     //Public constructor:
@@ -45,6 +48,7 @@ public class DiningServerImpl  implements DiningServer
             st[i]=states.THINKING;
             cd[i]=lock.newCondition();
             //System.out.println(i);
+            //System.out.println("Philosopher "+i+" is "+this.getPhilosopherState(i));
             i++;
         }
     }
