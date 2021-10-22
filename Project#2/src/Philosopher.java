@@ -2,7 +2,6 @@ import java.util.Random;
 
 //Philosopher class
 // act as a philosopher object in the table
-//could cause deadlock
 public class Philosopher implements Runnable
 {
     private int iD;
@@ -21,7 +20,7 @@ public class Philosopher implements Runnable
     public void run() {
         System.out.println("Philoshopher "+ iD+ " is in the table");// notify that a philosopher is in the table (DiningServerImpl)
         Random ran=new Random();// create a random object to generate random number
-        while(true){//run forever if no deadlock occurs
+        while(true){//run forever if the philosophers are synchronized
             try {// try if no error
                 table.takeForks(iD);// call takeForks method to get the chopsticks and eat
                 Thread.sleep(ran.nextInt(3000-1000+1)+1000);// let the philosopher sleep for a random time from 1000 milliseconds to 3000 milliseconds

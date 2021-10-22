@@ -3,7 +3,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 //DinignServerImpl class, implements DiningServer interface
-// to act as a monitor and preventing deadlock
+// to act as a monitor and synchronize all philosophers actions.
 public class DiningServerImpl  implements DiningServer
 {
     private int n=5;// default is 5 chopsticks and 5 philosophers
